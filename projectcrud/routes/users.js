@@ -32,4 +32,8 @@ router.delete("/delete/:id", usersController.deleteusers);
 
 router.put("/update/:id", usersController.update);
 
+router.get("/chat",(req,res)=>{
+res.render("chat")
+})
+
 module.exports = router;
