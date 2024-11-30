@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const userRouter = require("./routes/users");
 //const productRouter = require("./routes/products");
+const { addchat } = require("./controller/usersController");
 const mongo = require("mongoose");
 const db = require("./config/db.json");
 mongo
@@ -27,11 +28,16 @@ io.on("connection", (socket) => {
 
   socket.emit("msg", "user connected");
 
-  socket.on("msg", (data) => {
+  socket.on("msgname", (data) => {
     console.log(data);
-    io.emit("msg", data);
+    addchat(data.msg);
+    io.emit("msgname", data);
   });
 
+  socket.on("typing", (data) => {
+    console.log(data);
+    socket.broadcast.emit("typing", data);
+  });
   socket.on("disconnect", () => {
     console.log("user disconnected");
 
