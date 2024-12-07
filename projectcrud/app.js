@@ -5,7 +5,7 @@ const userRouter = require("./routes/users");
 const partieRouter = require("./routes/partie");
 //const productRouter = require("./routes/products");
 const { addchat } = require("./controller/usersController");
-const {addpartiesocket}=require('./controller/partieController')
+const {addpartiesocket,aff}=require('./controller/partieController')
 const mongo = require("mongoose");
 const db = require("./config/db.json");
 mongo
@@ -34,6 +34,11 @@ io.on("connection", (socket) => {
   socket.on("partie", (data) => {
     addpartiesocket(data)
     io.emit("partie", data);
+  });
+
+  socket.on("aff", async(data) => {
+    const datanew= await aff(data)
+    io.emit("aff", datanew);
   });
 
   socket.on("msgname", (data) => {

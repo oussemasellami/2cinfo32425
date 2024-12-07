@@ -14,7 +14,7 @@
         <input type="text" id="J2">
         <br>
         <button onclick="ajouter()">Envoyer</button>
-        <button>Afficher stat</button>
+        <button onclick="aff()">Afficher stat</button>
     </center>
 
     </body>
@@ -32,6 +32,13 @@ document.body.append(p)
 })
 
 
+socket.on("aff",(data)=>{
+
+p=document.createElement("p")
+p.innerText=("nom partie: "+nompartie.value+"pseudo : "+data.j1.pseudo+"sante: "+data.j1.sante)
+document.body.append(p)
+})
+
 
 
 
@@ -42,6 +49,11 @@ document.body.append(p)
 
 function ajouter(){
     socket.emit("partie",{Nompartie:nompartie.value,joueur1:id1.value,joueur2:id2.value})
+
+}
+
+function aff(){
+    socket.emit("aff",{Nompartie:nompartie.value,joueur1:id1.value,joueur2:id2.value})
 
 }
     </script>
